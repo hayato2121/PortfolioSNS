@@ -4,9 +4,9 @@ dj-static
 python-decouple
 django-environ
 gunicorn
-psycopg2-binary
 whitenoise
 django-allauth
 django-cors-headers
 django-widgets-improved
 python-dotenv
+Pillow
