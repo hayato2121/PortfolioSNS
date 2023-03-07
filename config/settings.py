@@ -15,8 +15,8 @@ from pathlib import Path
 import os
 
 import environ
-from decouple import config
-from dj_database_url import parse as dburl
+from decouple import Csv, config
+from dj_database_url import parse as dburl 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,9 +32,11 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG', default=False, cast=bool)
+ 
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+
 
 
 # Application definition
@@ -104,9 +106,9 @@ load_dotenv(dotenv_path)
 DATABASES = {
     'default': {
       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'NAME': config(os.environ.get('DB_NAME')),
+        'USER': config(os.environ.get('DB_USER')),
+        'PASSWORD': config(os.environ.get('DB_PASSWORD')),
         'HOST': '',
         'PORT': '',
     }
