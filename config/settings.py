@@ -14,10 +14,16 @@ from pathlib import Path
 
 import os
 
+import environ
+from decouple import config
+from dj_database_url import parse as dburl
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -51,6 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,6 +87,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -90,8 +98,8 @@ from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
 
-dotenv_path=join(dirname(__file__),'.env');
-load_dotenv(dotenv_path);
+dotenv_path=join(dirname(__file__),'.env')
+load_dotenv(dotenv_path)
 
 DATABASES = {
     'default': {
@@ -103,6 +111,16 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SUPERUSER_NAME = env("SUPERUSER_NAME")
+SUPERUSER_EMAIL = env("SUPERUSER_EMAIL")
+SUPERUSER_PASSWORD = env("SUPERUSER_PASSWORD")
+
 
 
 # Password validation
@@ -126,6 +144,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+ALLOWED_HOSTS =['*']
 
 LANGUAGE_CODE = 'ja'
 
@@ -163,6 +183,5 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True 
 
 SITE_ID = 1 
-
-LOGIN_REDIRECT_URL = 'home'        #リダイレクト先をhomeページに設定。詳細後述          
-ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = 'home'        #リダイレクト先をhomeページに設定。詳細後述         
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/' 
