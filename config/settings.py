@@ -33,9 +33,9 @@ SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
  
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+ALLOWED_HOSTS = ["*"]
 
 
 
@@ -103,15 +103,10 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+
 DATABASES = {
-    'default': {
-      'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config(os.environ.get('DB_NAME')),
-        'USER': config(os.environ.get('DB_USER')),
-        'PASSWORD': config(os.environ.get('DB_PASSWORD')),
-        'HOST': '',
-        'PORT': '',
-    }
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
