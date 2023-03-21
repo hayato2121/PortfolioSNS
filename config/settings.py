@@ -180,7 +180,7 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-SITE_ID = 1   #django-allauthを利用する際に必要な設定
+SITE_ID = 2   #django-allauthを利用する際に必要な設定
 LOGIN_REDIRECT_URL = '/'   # ログインURLの設定  #ログイン画面を何処にするかの設定
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'   #ログアウトリダイレクトの設定
 ACCOUNT_EMAIL_VERIFICATION = 'none'   #ユーザ登録確認メールを送信する
