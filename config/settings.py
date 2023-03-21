@@ -170,12 +170,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  #default
     'allauth.account.auth_backends.AuthenticationBackend',  # django-allauth を追加
 )
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'None'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
