@@ -8,12 +8,12 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username,password=None):
+    def create_user(self, email,password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),
+            email=self.normalize_email(email)
         )
 
         user.set_password(password)
@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("メールアドレス", max_length=255, unique=True,blank=True,null=True)
-    username = models.CharField("名前", max_length=255,default='user')
+    username = models.CharField("名前", max_length=255,)
     image = models.ImageField(upload_to='images', verbose_name='イメージ画像', blank=True, null=True)
     bg_image = models.ImageField(upload_to='images', verbose_name='バック画像', blank=True, null=True)
     content = models.TextField('本文', blank=True, null=True)
