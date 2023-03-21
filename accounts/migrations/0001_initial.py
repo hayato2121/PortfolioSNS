@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                         verbose_name="メールアドレス",
                     ),
                 ),
-                ("username", models.CharField(max_length=255, verbose_name="名前")),
+                ("username", models.CharField(max_length=255, verbose_name="名前",default='user')),
                 (
                     "image",
                     models.ImageField(

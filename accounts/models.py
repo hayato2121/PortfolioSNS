@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField("メールアドレス", max_length=255, unique=True,blank=True,null=True)
-    username = models.CharField("名前", max_length=255)
+    username = models.CharField("名前", max_length=255,default='user')
     image = models.ImageField(upload_to='images', verbose_name='イメージ画像', blank=True, null=True)
     bg_image = models.ImageField(upload_to='images', verbose_name='バック画像', blank=True, null=True)
     content = models.TextField('本文', blank=True, null=True)
