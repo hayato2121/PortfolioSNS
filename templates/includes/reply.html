@@ -1,0 +1,23 @@
+{% for reply in reply_list %}
+<div class="w-11/12  p-2 shadow-xl ml-auto border-2  mb-3 bg-white">
+    <div class="w-11/12 ml-auto">
+        <h2 class="font-bold mb-2 text-gray-700">{{reply.user}}</h2>
+        <p class="mb-2 break-words">{{reply.content}}</p>
+        {% if reply.image %}
+        <img src="{{reply.image.url}}" class="w-2/6 rounded-lg  object-contain mx-auto shadow-lg " />
+        {% endif %}
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-sm text-gray-400 ml-5">{{ reply.created_at}}</p>
+            </div>
+            <div>
+                <a href="{% url 'reply_create' reply.pk %}" class="inline-block text-sm px-4 py-2 leading-none border-2 shadow-lg border-gray-700 rounded-lg  mb-5 hover:border-transparent hover:text-gray-300 hover:bg-white mt-4 md:mt-0">返信する</a>
+            </div>
+        </div>
+        
+        {% with reply_list=reply.comment_set.all %}
+        {% include 'includes/reply.html' %}
+        {% endwith %}
+    </div>
+</div>
+{% endfor %}

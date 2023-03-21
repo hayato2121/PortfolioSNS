@@ -1,0 +1,58 @@
+{% load socialaccount %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!--form設定 formだけBootstrap使用 --->
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+</head>
+
+
+<div class="w-full min-h-screen px-8 py-16 bg-[url('/media/images/signup.jpg')] bg-cover bg-center ">
+  <div class="container mx-auto">
+    <div class="flex flex-col items-center ">
+      <div class="w-full space-y-5 md:w-11/12 text-center mb-10 ">
+        <p class="font-medium text-blue-500 uppercase">child rearing</p>
+        <h2 class="text-5xl font-extrabold leading-none text-black  mb-3">
+          子育て相談SNS 「Childder」
+        </h2>
+      </div>
+
+      <div class="w-full  md:w-4/6" >
+        <div class="card card-auth my-5 mx-auto">
+          <div class="card-body">
+            <a href="{% url 'account_login' %}"><img src="/media/images/childderlogo.png" width="80" height="80" class="mx-auto mb-2 " alt="logo"></a>
+            <h5 class="card-title text-center"><i class="fab fa-google"></i>Googleアカウント登録</h5>
+            <form method="post" class="form-auth">
+                {% csrf_token %}
+                <div class="form-label-group">
+                  {% render_field form.username class="form-control" placeholder="ユーザー名" %}
+                </div>
+                <div class="form-label-group">
+                  {% render_field form.email class="form-control" placeholder="メールアドレス" %}
+                </div>
+                <div class="text-center mt-10">
+                  <button class="bg-red-500 hover:bg-red-400 text-white rounded px-6 py-4 border border-white"" type="submit">サインアップ</button>
+                </div>
+              </form>
+              <br>
+            </form>
+
+        
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -3,68 +3,110 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="container">
-    <div class="alert alert-success" role="alert">
-        <p>タイトル：{{object.title}}</p>
-        <p>投稿者：{{object.user}}</p>
-        <p>コメント：{{object.content}}</p>
-        {% if object.image %}
-        <img src="{{object.image.url}}" width="100" height="100" />
-        {% endif %}
-
-        {% if request.user in object.like.all %}
-        <a href="{% url 'like-detail' object.pk %}" class="like-btn add-color" tabindex="-1" role="button"
-            aria-disabled="true"><i class="fas fa-heart"></i></a>{{object.like.count}}
-        {% else %}
-        <a href="{% url 'like-detail' object.pk %}" class="like-btn" tabindex="-1" role="button" aria-disabled="true"><i
-                class="far fa-heart"></i></a>{{object.like.count}}
-        {% endif %}
-
-        {% if object.user in connection.0.following.all %}
-        <a href="{% url 'follow-detail' object.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button"
-            aria-disabled="true">フォロー解除</a>
-        {% else %}
-        <a href="{% url 'follow-detail' object.pk %}" class="btn btn-primary ms-3" tabindex="-1" role="button"
-            aria-disabled="true">フォロー</a>
-        {% endif %}
-
-        {% if object.user == request.user %}
-        <a href="{% url 'update' object.pk %}" class="btn btn-primary ms-3" tabindex="-1" role="button"
-            aria-disabled="true">編集</a>
-        <a href="{% url 'delete' object.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button"
-            aria-disabled="true">削除</a>
-        {% endif %}
-
-    </div>
-</div>
-
-<div class="comment-form alert alert-success">
-    <h2>コメント</h2>
-    <form action="{% url 'comment_create' post.pk %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ comment_form }}
+<div class="w-4/5 mx-auto border-x-2 p-2  ">
+    <div class="flex justify-between mb-5 mt-2">
         <div>
-            <button type="submit">送信</button>
+            <h1 class="font-bold block text-gray-500 hover:text-red-300 hover:underline decoration-red-500">
+                <a href="{% url 'home' %}">
+                    ←HOME
+                </a>
+            </h1>
         </div>
-    </form>
-</div>
+        <div>
+            {% if post.user == request.user %}
+            <a href="{% url 'update' post.pk %}"
+                class="text-white border-2 bg-gray-600 px-6 py-2 rounded-lg mr-2 hover:bg-gray-400" tabindex="-1"
+                role="button" aria-disabled="true"><i class="fa-solid fa-pen-to-square"></i>編集</a>
 
-
-<div class="comment mt-3 ">
-    <h2>コメント一覧</h2>
-    <div class="alert alert alert-success m-3">
-        {% for comment in post.comment_set.all %}
-        <div class="container">
-            <p>投稿者：{{comment.user}}</p>
-            <p>コメント：{{comment.content}}</p>
-            {% if comment.image %}
-            <img src="{{comment.image.url}}" width="100" height="100" />
+            <a href="{% url 'delete' post.pk %}"
+                class="text-white border-2 bg-red-500 px-6 py-2 rounded-lg mr-2 hover:bg-red-300" tabindex="-1"
+                role="button" aria-disabled="true"><i class="fa-solid fa-trash-can"></i>削除</a>
             {% endif %}
         </div>
-        {% endfor %}
     </div>
-</div>
+    <div class="flex justify-between items-center grow pb-2 border-b-2 border-gray-300">
+        <div>
+            <p class="font-bold text-lg">{{object.user}}</p>
+        </div>
+        <div>
+            {% if object.user in connection.0.following.all %}
+            <a href="{% url 'follow-detail' object.pk %}"
+                class="bg-gray-600 hover:bg-gray-300 text-sm text-white rounded px-12 py-2 rounded-2xl" tabindex="-1"
+                role="button" aria-disabled="true">Follow解除</a>
+            {% else %}
+            <a href="{% url 'follow-detail' object.pk %}"
+                class="bg-blue-600 hover:bg-blue-300 text-sm text-white rounded px-12 py-2 rounded-2xl" tabindex="-1"
+                role="button" aria-disabled="true">Follow</a>
+            {% endif %}
+        </div>
+    </div>
 
+    <div class="w-11/12 mt-3">
+        <p class="break-words">{{object.content}}</p>
+    </div>
+
+    {% if object.image %}
+    <img src="{{object.image.url}}" class="w-4/5 rounded-lg h-3/5 object-contain mx-auto shadow-lg mt-5" />
+    {% endif %}
+
+    <div class="mt-3 flex border-b-2 border-gray-300 pb-2">
+        <div class="flex items-center">
+            {% if request.user in object.like.all %}
+            <a href="{% url 'like-detail' object.pk %}" class="like-btn add-color" tabindex="-1" role="button"
+                aria-disabled="true"><i class='fa fa-heart' style='color: red'></i></a>{{object.like.count}}
+            {% else %}
+            <a href="{% url 'like-detail' object.pk %}" class="like-btn" tabindex="-1" role="button"
+                aria-disabled="true"><i class='far fa-heart'></i></a>{{object.like.count}}
+            {% endif %}
+        </div>
+        <div>
+            <p class="text-sm text-gray-400 ml-5">{{ object.created_at}}</p>
+        </div>
+
+    </div>
+
+
+    <!--コメント一覧-->
+    <div class="my-3 text-center ">
+        <h1 class="font-bold text-2xl underline decoration-gray-500">Comment-List</h1>
+        <a href="{% url 'comment_create' post.pk %}"
+            class=" block mt-4 w-10/12 border-2 shadow-lg border-gray-700 w-full md:w-full px-4 py-3 md:py-4 bg-white  rounded-lg font-semibold  hover:bg-gray-300 mr-3">
+            記事にコメントする
+        </a>
+    </div>
+
+    {% for comment in comment_list %}
+    <div class="w-11/12  bg-white p-2 rounded-lg shadow-xl ml-auto border-2 mb-3">
+        <div class="flex justify-between items-center">
+            <h2 class="font-bold mb-2 text-gray-600">{{comment.user}}</h2>
+            {% if comment.user == request.user %}
+            <a href="{% url 'commentdelete' comment.pk %}"
+                class="text-white border-2 bg-red-500 px-6 py-2 rounded-lg mr-2 hover:bg-red-300" tabindex="-1"
+                role="button" aria-disabled="true"><i class="fa-solid fa-trash-can"></i>削除</a>
+            {% endif %}
+        </div>
+        <p class="mb-2 break-words ">{{comment.content}}</p>
+        {% if comment.image %}
+        <img src="{{comment.image.url}}" class="w-3/6 rounded-lg  object-contain mx-auto shadow-lg " />
+        {% endif %}
+        <div class="mt-3 flex justify-between items-center">
+            <div>
+                <p class="text-sm text-gray-400 ml-5">{{ comment.created_at}}</p>
+            </div>
+            <div>
+                <a href="{% url 'reply_create' comment.pk %}" rel="nofollow"
+                    class="inline-block text-sm px-4 py-2 leading-none border-2 shadow-lg border-gray-700 rounded-lg  mb-5 hover:border-transparent hover:text-gray-300 hover:bg-white mt-4 md:mt-0">
+                    返信する
+                </a>
+            </div>
+        </div>
+        {% with reply_list=comment.comment_set.all %}
+        {% include 'includes/reply.html' %}
+        {% endwith %}
+
+    </div>
+    {% endfor %}
+</div>
 
 
 {% endblock content %}

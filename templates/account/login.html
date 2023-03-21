@@ -1,0 +1,96 @@
+{% load socialaccount %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!--form設定 formだけBootstrap使用 --->
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <script src="https://kit.fontawesome.com/c57123ccef.js" crossorigin="anonymous"></script>
+</head>
+
+
+<div class="w-full min-h-screen px-8 py-16 bg-[url('/media/images/login.jpg')] bg-cover bg-center ">
+  <div class="container mx-auto">
+    <div class="flex flex-col items-center ">
+      <div class="w-full space-y-5 md:w-11/12 text-center mb-10 ">
+        <p class="font-medium text-blue-500 uppercase">child rearing</p>
+        <h2 class="text-2xl font-extrabold leading-none text-black sm:text-3xl md:text-5xl mb-3">
+          子育て相談SNS
+        </h2>
+        <h2 class="text-2xl font-extrabold leading-none text-black sm:text-3xl md:text-5xl ">
+          「 Childder 」
+        </h2>
+        <p class="text-xl text-gray-600 md:pr-16">
+          子育てに関する相談や悩みをみんなで分かち合おう！<br>愚痴を見かけたら優しく共感したり、可愛い子供を自慢する場としても使って
+          いただけると思います！
+        </p>
+      </div>
+
+      <div class="w-full  md:w-5/6">
+        <div class="card card-auth my-5 mx-auto">
+          <div class="card-body">
+            <img src="/media/images/childderlogo.png" width="80" height="80" class="mx-auto mb-2 " alt="logo">
+            <h5 class="card-title text-center">ログインして相談しよう！</h5>
+            <form method="post" class="form-auth">
+              {% csrf_token %}
+              <div class="form-label-group">
+                {% render_field form.login class="form-control" placeholder="email" %}
+              </div>
+              <div class="form-label-group">
+                {% render_field form.password class="form-control" placeholder="パスワード" %}
+              </div>
+              <label>
+                <input type="checkbox" name="remember" id="remember"> ログインを維持
+              </label>
+              <div class="text-center mb-3">
+                <button class="bg-blue-500 hover:bg-blue-400 text-white rounded px-6 py-4 border border-white w-3/5"
+                  type="submit">ログイン</button>
+              </div>
+            
+              <div class="or-container">
+                <div class="or-label text-4xl">or</div>
+              </div>
+
+
+              {% get_providers as socialaccount_providers %}
+              {% for provider in socialaccount_providers %}
+              {% if provider.name == "Google" %}
+              <div class="input-group">
+                <span class="input-group-addon addon-goog">
+                  <a class="btn btn-lg btn-block btn-google socialaccount_provider {{provider.id}}"
+                    href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                    <i class="fab fa-google text-gray-400 mr-2 border-2 rounded-full"></i>Google Login</a>
+                </span>
+
+              </div>
+              {% endif %}
+              {% endfor %}
+              <br>
+            </form>
+
+            <div class="or-container">
+              <div class="line-separator w-3/5"></div>
+            </div>
+
+
+            <div class="flex justify-center">
+              <a href="{% url 'account_signup' %}" class="text-center font-bold text-white mt-10 bg-red-500 hover:bg-red-400 rounded px-6 py-4 border border-white w-3/5 mx-auto">新規登録はこちら</a></p>
+            </div>
+
+        
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

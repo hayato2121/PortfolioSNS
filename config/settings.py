@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v
 
 DEBUG = True
  
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['127.0.0.1'] 
 
 
 
@@ -48,13 +48,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
     'snsapp.apps.SnsappConfig',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  
+    'allauth.socialaccount.providers.github',
     'corsheaders',
-    'widget_tweaks',
+    'crispy_forms',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -74,7 +78,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/ 'templates'],
+        'DIRS': [os.path.join(BASE_DIR,"templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,7 +160,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -166,19 +172,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
-#アカウント処理設定
 AUTHENTICATION_BACKENDS = (
-  'django.contrib.auth.backends.ModelBackend',
-  'allauth.account.auth_backends.AuthenticationBackend',  
+    'django.contrib.auth.backends.ModelBackend',  #default
+    'allauth.account.auth_backends.AuthenticationBackend',  # django-allauth を追加
 )
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_USERNAME_REQUIRED = True 
+ACCOUNT_AUTHENTICATION_METHOD = 'email'   # email+パスワード認証方式を指定
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_EMAIL_REQUIRED = True 
+SITE_ID = 1   #django-allauthを利用する際に必要な設定
+LOGIN_REDIRECT_URL = '/'   # ログインURLの設定  #ログイン画面を何処にするかの設定
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'   #ログアウトリダイレクトの設定
+ACCOUNT_EMAIL_VERIFICATION = 'none'   #ユーザ登録確認メールを送信する
+ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 
-SITE_ID = 1 
-LOGIN_REDIRECT_URL = 'home'        #リダイレクト先をhomeページに設定。詳細後述         
-ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/' 
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

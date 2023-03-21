@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gray-300 min-h-screen py-32">
+   <div class="block">
+      <a href="{% url 'home' %}" class=" border-2 border-white px-4 py-1 rounded-lg text-xl ml-3 font-bold text-white hover:text-red-300  hover:bg-red-100">←HOME</a>
+   </div>
+   <div class="bg-white w-10/12 p-10 mx-auto rounded-xl shadow-xl text-gray-600 font-bold mt-5">
+         <div class="">
+           <div class="flex items-center inline-block justify-center w-16 h-16 flex-shrink-0 mx-auto text-2xl text-indigo-700">
+             <i class="fa-solid fa-trash-can"></i>
+           </div>
+         <p class="text-center text-sm font-bold sm:text-2xl mt-5">本当に削除してもよろしいですか?</p>
+         </div>
+         <div class="text-center mt-4 flex flex-col ">
+           <div>
+              <form method="post">{% csrf_token %}
+                 <input type="submit"
+                       class="block w-full md:block md:w-full px-4 py-3 md:py-4 bg-indigo-700 text-white rounded-lg font-semibold  hover:bg-indigo-300 mr-3" type="submit" value="削除する">
+              </form>
+           </div>
+           <div>
+            <a href="{% url 'detail' comment.pk%}"
+              class="block w-full md:block md:w-full px-4 py-3 md:py-4 bg-gray-400 rounded-lg font-semibold  mt-7  hover:bg-gray-200">
+              ←投稿に戻る
+            </a>
+           </div>
+         </div>
+   </div>
+ </div>
+ {% endblock %}

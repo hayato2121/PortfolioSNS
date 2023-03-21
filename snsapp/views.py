@@ -11,8 +11,10 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import redirect, get_object_or_404
 
-from .models import Post, Follow, Comment
+from .models import Post, Follow, Comment 
 # Create your views here.
+
+
 
 #自分以外の投稿を表示
 class Home(LoginRequiredMixin, ListView):
@@ -34,7 +36,7 @@ class Home(LoginRequiredMixin, ListView):
 class MyPost(LoginRequiredMixin, ListView):
     #自分の投稿のみ表示
     model = Post
-    template_name = 'list.html'
+    template_name = 'mypost.html'
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
@@ -53,9 +55,59 @@ class DetailPost(LoginRequiredMixin, DetailView):
     #フォローに関するオブジェクト情報をコンテクストに追加
         context = super().get_context_data(*args, **kwargs)
         context['follow'] = Follow.objects.get_or_create(user = self.request.user)
+        context['comment_list'] = self.object.comment_set.filter(parent__isnull=True)
         # テンプレートにコメント作成フォームを渡す
         context['comment_form'] = CommentCreateForm
+
         return context
+   
+   
+   #コメント
+def comment_create(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    form_class = CommentCreateForm
+    form = form_class(request.POST,request.FILES or None)
+
+    if request.method == 'POST':
+        form.instance.user = request.user
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+        return redirect('detail', pk=post.pk)
+
+    context = {
+        'form': form,
+        'post': post
+    }
+
+    return render(request, 'comment_form.html', context)
+
+#コメント返信
+def reply_create(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    form_class = CommentCreateForm
+    post = comment.post
+    form = form_class(request.POST,request.FILES or None)
+
+    if request.method == 'POST':
+        form.instance.user = request.user
+        reply = form.save(commit=False)
+        reply.parent = comment
+        reply.post = post
+        reply.save()
+        return redirect('detail', pk=post.pk)
+        
+    
+    context = {
+        'form': form,
+        'post': post,
+        'comment': comment,
+    }
+    return render(request, 'comment_form.html', context)
+
+
+   
+
 
 #投稿フォーム
 class EditPost(LoginRequiredMixin, CreateView):
@@ -69,12 +121,14 @@ class EditPost(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
+
+
 #投稿編集
 class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     model = Post 
     template_name = 'update.html'
-    fields = ['title', 'content', 'image']
+    form_class = ImageUploadForm
 
     def get_success_url(self, **kwargs):
         pk = self.kwargs["pk"]
@@ -89,7 +143,7 @@ class UpdatePost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
 
 
-#投稿削除
+#post投稿削除
 class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
    model = Post
    template_name = 'delete.html'
@@ -99,7 +153,18 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
        pk = self.kwargs["pk"]
        post = Post.objects.get(pk=pk)
        return (post.user == self.request.user)
+   
+#comment投稿削除
+class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+   model = Comment
+   template_name = 'commentdelete.html'
+   success_url = reverse_lazy('mypost')
 
+   def test_func(self, **kwargs):
+       pk = self.kwargs["pk"]
+       comment = Comment.objects.get(pk=pk)
+       return (comment.user == self.request.user)
+   
 
 #いいね機能
 class LikeBase(LoginRequiredMixin, View):
@@ -115,6 +180,7 @@ class LikeBase(LoginRequiredMixin, View):
             obj = related_post.like.add(self.request.user)
 
         return obj
+
     
 # 画面遷移先　HOMEでいいねした場合。
 class LikeHome(LikeBase):
@@ -128,6 +194,8 @@ class LikeDetail(LikeBase):
         super().get(request, *args, **kwargs)
         pk = self.kwargs['pk']
         return redirect('detail', pk)
+    
+
 
 
 #Follor機能
@@ -175,27 +243,6 @@ class FollowList(LoginRequiredMixin, ListView):
         all_follow = my_follow[0].following.all()
         return Post.objects.filter(user__in=all_follow)
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['follow'] = Follow.objects.get_or_create(user=self.request.user)
-        return context
 
-
-#コメント機能
-class CommentCreate(LoginRequiredMixin, CreateView):
-
-    model = Comment
-    form_class = CommentCreateForm
-
-    def form_valid(self, form,):
-        form.instance.user = self.request.user
-        post_pk = self.kwargs.get('pk')
-        post = get_object_or_404(Post , pk=post_pk)
-
-        comment = form.save(commit=False)
-        comment.target = post
-        comment.save()
-        return redirect('detail',pk=post_pk)
-    
 
 
