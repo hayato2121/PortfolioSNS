@@ -106,7 +106,7 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 
 DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
