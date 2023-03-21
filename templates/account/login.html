@@ -58,21 +58,6 @@
                 <div class="or-label text-4xl">or</div>
               </div>
 
-
-              {% get_providers as socialaccount_providers %}
-              {% for provider in socialaccount_providers %}
-              {% if provider.name == "Google" %}
-              <div class="input-group">
-                <span class="input-group-addon addon-goog">
-                  <a class="btn btn-lg btn-block btn-google socialaccount_provider {{provider.id}}"
-                    href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-                    <i class="fab fa-google text-gray-400 mr-2 border-2 rounded-full"></i>Google Login</a>
-                </span>
-
-              </div>
-              {% endif %}
-              {% endfor %}
-              <br>
             </form>
 
             <div class="or-container">
