@@ -1,13 +1,3 @@
-django
-dj-database-url
-dj-static
-python-decouple
-django-environ
+-r requirements-dev.txt
 gunicorn
-psycopg2-binary
-whitenoise
-django-allauth
-django-cors-headers
-python-dotenv
-Pillow
-django-crispy-forms
+psycopg2

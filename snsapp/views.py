@@ -235,7 +235,7 @@ class FollowDetail(FollowBase):
 class FollowList(LoginRequiredMixin, ListView):
     
     model = Post
-    template_name = 'list.html'
+    template_name = 'follow-list.html'
 
     def get_queryset(self):
         #フォローリスト内にユーザーが含まれている場合のみクエリセット返す

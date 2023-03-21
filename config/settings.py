@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v
 
 DEBUG = True
  
-ALLOWED_HOSTS = ['127.0.0.1'] 
+ALLOWED_HOSTS = ['*'] 
 
 
 
@@ -93,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -107,7 +106,7 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
 
 DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
