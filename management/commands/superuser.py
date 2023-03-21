@@ -9,8 +9,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not User.objects.filter(username=settings.SUPERUSER_NAME).exists():
             User.objects.create_superuser(
-                username=settings.SUPERUSER_NAME,
                 email=settings.SUPERUSER_EMAIL,
+                username=settings.SUPERUSER_NAME,
                 password=settings.SUPERUSER_PASSWORD
+                
             )
             print("スーパーユーザー作成")

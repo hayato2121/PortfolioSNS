@@ -93,6 +93,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -106,7 +107,6 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 
 DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
@@ -178,7 +178,10 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # django-allauth を追加
 )
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'   # email+パスワード認証方式を指定
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'None'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 SITE_ID = 1   #django-allauthを利用する際に必要な設定
 LOGIN_REDIRECT_URL = '/'   # ログインURLの設定  #ログイン画面を何処にするかの設定
