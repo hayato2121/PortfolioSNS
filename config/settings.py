@@ -52,9 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  
-    'allauth.socialaccount.providers.github',
     'corsheaders',
     'crispy_forms',
     'widget_tweaks'
