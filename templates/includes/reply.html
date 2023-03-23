@@ -1,23 +1,27 @@
 {% for reply in reply_list %}
-<div class="w-11/12  p-2 shadow-xl ml-auto border-2  mb-3 bg-white">
-    <div class="w-11/12 ml-auto">
-        <h2 class="font-bold mb-2 text-gray-700">{{reply.user}}</h2>
-        <p class="mb-2 break-words">{{reply.content}}</p>
+<div class="w-11/12  p-2 shadow-xl rounded-2xl ml-auto border-2  mb-3 bg-white">
+        <h2 class="font-bold mb-3 text-gray-700">{{reply.user}}</h2>
+        <p class="mb-2 break-words text-sm sm:text-lg">{{reply.content}}</p>
         {% if reply.image %}
-        <img src="{{reply.image.url}}" class="w-2/6 rounded-lg  object-contain mx-auto shadow-lg " />
+        <img src="{{reply.image.url}}" class="w-4/6 rounded-lg  object-contain mx-auto shadow-lg " />
         {% endif %}
-        <div class="flex justify-between items-center">
+        <div class="text-right block mt-3 sm:flex sm:justify-between sm:items-center">
             <div>
-                <p class="text-sm text-gray-400 ml-5">{{ reply.created_at}}</p>
+                <p class="text-sm text-gray-400">{{ reply.created_at}}</p>
             </div>
             <div>
-                <a href="{% url 'reply_create' reply.pk %}" class="inline-block text-sm px-4 py-2 leading-none border-2 shadow-lg border-gray-700 rounded-lg  mb-5 hover:border-transparent hover:text-gray-300 hover:bg-white mt-4 md:mt-0">返信する</a>
+                <a href="{% url 'reply_create' reply.pk %}" class="inline-block text-sm px-2 py-1 leading-none border-2  shadow-lg border-gray-700 rounded-lg  my-2 hover:border-transparent hover:text-gray-300 hover:bg-white  md:mt-0 sm:px-6 sm:py-1 sm:text-lg">返信する</a>
             </div>
         </div>
-        
+        <div class="text-right">
+            <a href="{% url 'commentdelete' reply.pk %}"
+                class="text-white border-2 bg-red-500 px-4 py-1 text-sm rounded-lg hover:bg-red-300 sm:px-6 sm:py-2 sm:text-lg" ><i class="fa-solid fa-trash-can"></i>削除</a>
+        </div>
+        <div class="mt-2">
         {% with reply_list=reply.comment_set.all %}
         {% include 'includes/reply.html' %}
         {% endwith %}
-    </div>
+        </div>
+        
 </div>
 {% endfor %}

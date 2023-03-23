@@ -165,6 +165,7 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
        comment = Comment.objects.get(pk=pk)
        return (comment.user == self.request.user)
    
+   
 
 #いいね機能
 class LikeBase(LoginRequiredMixin, View):

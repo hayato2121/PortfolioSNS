@@ -5,13 +5,19 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{% static '/css/style.css/' %}">
+  <link rel="stylesheet" href="{% static '/css/form.css/' %}">
   <title>Childder</title>
   <link rel="icon" href="media/images/childderlogo.ico">
   <!--form設定 formだけBootstrap使用 --->
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
     id="bootstrap-css">
-  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!--
+  <script src="https://cdn.tailwindcss.com"></script>
+  -->
+
+  <link rel="stylesheet" href="{% static '/css/style.css/' %}">
+
   <script src="https://kit.fontawesome.com/c57123ccef.js" crossorigin="anonymous"></script>
 
 </head>
@@ -31,7 +37,7 @@
         <div class="card card-auth my-5 mx-auto">
           <div class="card-body">
             <a href="{% url 'account_login' %}"><img src="/media/images/childderlogo.png" width="80" height="80" class="mx-auto mb-2 " alt="logo"></a>
-            <h5 class="card-title text-center">アカウント新規登録</h5>
+            <h5 class="text-2xl sm:text-5xl text-center mb-5 font-bold">アカウント新規登録</h5>
             <form method="post" class="form-auth">
                 {% csrf_token %}
                 <div class="form-label-group">
