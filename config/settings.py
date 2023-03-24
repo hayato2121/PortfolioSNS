@@ -14,7 +14,6 @@ from pathlib import Path
 
 import os
 
-import dj_database_url
 import environ
 from decouple import Csv, config
 from dj_database_url import parse as dburl 
@@ -148,7 +147,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -184,5 +183,8 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DATABASES = {
-        'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
