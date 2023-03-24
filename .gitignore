@@ -1,8 +1,8 @@
 myvenv
 db.sqlite3
-django.db.backends.postgresql_psycopg2
 .vscode
 __pycache__
 *.pyc
 .DS_Store
 .env
+staticfiles

@@ -18,7 +18,7 @@ import environ
 from decouple import Csv, config
 from dj_database_url import parse as dburl 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, ".env"))
@@ -108,8 +108,7 @@ DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
