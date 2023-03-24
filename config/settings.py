@@ -102,13 +102,6 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
-
-DATABASES = {
-    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
-}
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -154,10 +147,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -186,3 +181,12 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+
+DATABASES = {
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
+}
