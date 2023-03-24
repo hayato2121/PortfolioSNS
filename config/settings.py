@@ -33,11 +33,10 @@ SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
  
 ALLOWED_HOSTS = [
-    "django-render-orpc.onrender.com",
-    "www.sns-childder.com"
+    "*"
 ] 
 
 
