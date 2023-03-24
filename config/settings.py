@@ -108,7 +108,7 @@ DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
