@@ -12,4 +12,3 @@ python-dotenv
 Pillow
 django-crispy-forms
 django-widget-tweaks
-django-heroku

@@ -188,10 +188,3 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-import django_heroku
-import dj_database_url
-django_heroku.settings(locals(), staticfiles=False )
-
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
