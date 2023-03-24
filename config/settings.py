@@ -37,7 +37,6 @@ DEBUG = False
  
 ALLOWED_HOSTS = [
     "django-render-orpc.onrender.com",
-    "216.24.57.1",
     "sns-childder.com"
 ] 
 
