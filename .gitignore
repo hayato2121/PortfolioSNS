@@ -5,6 +5,4 @@ django.db.backends.postgresql_psycopg2
 __pycache__
 *.pyc
 .DS_Store
-imagesd
-media
 .env
