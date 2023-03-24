@@ -89,7 +89,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -103,6 +103,7 @@ load_dotenv(verbose=True)
 dotenv_path=join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
 
+default_dburl = 'sqlite:///' + str(BASE_DIR / "db.sqlite3")
 
 DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
