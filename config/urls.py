@@ -25,9 +25,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     path('', include('snsapp.urls')),
-
-    re_path(r'^static/(?P<path>.*)$', serve,
-            {'document_root': settings.STATIC_ROOT}),
 ]
 
 if settings.DEBUG:
