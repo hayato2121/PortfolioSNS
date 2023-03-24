@@ -18,8 +18,7 @@ import environ
 from decouple import Csv, config
 from dj_database_url import parse as dburl 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -146,17 +145,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    ( "css" , os.path.join(STATIC_ROOT , 'css' ))
-]
+
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = (BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -183,9 +179,8 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-import dj_database_url
 
-db_from_env = dj_database_url.config()
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 DATABASES = {
-        'default': dj_database_url.config()
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
