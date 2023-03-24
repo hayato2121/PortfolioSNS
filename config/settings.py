@@ -89,7 +89,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "django.db.backends.postgresql_psycopg2")
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
