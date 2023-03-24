@@ -37,7 +37,6 @@ DEBUG = True
  
 ALLOWED_HOSTS = [
     'django-render-orpc.onrender.com',
-    'localhost',
 ] 
 
 
