@@ -1,0 +1,12 @@
+django
+dj-database-url
+dj-static
+python-decouple
+django-environ
+django-allauth
+django-cors-headers
+python-dotenv
+Pillow
+django-crispy-forms
+django-widget-tweaks
+whitenoise
