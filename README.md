@@ -4,6 +4,7 @@
 pythonでSNS webアプリを作成中です。
 
 renderから　heroku にデプロイを変更しています。
+
 ポートフォリオURL： https://childder.herokuapp.com
 
 まだ開発中のため。　DEBUG = True にしています。
