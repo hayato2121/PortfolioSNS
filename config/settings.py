@@ -31,8 +31,8 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
-ALLOWED_HOSTS=['childder.herokuapp.com']
+DEBUG = True
+ALLOWED_HOSTS=['childder.herokuapp.com','localhost']
 SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v'
 
 
@@ -145,9 +145,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = '/var/www/config/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 MEDIA_URL = '/media/'
@@ -179,10 +178,9 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 DATABASES = {
-    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
+    'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': BASE_DIR / 'db.sqlite3',
+  }
 }
-
-import mimetypes
-mimetypes.add_type("text/css", ".css", True)
