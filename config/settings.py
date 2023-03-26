@@ -31,7 +31,7 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS=['childder.herokuapp.com','localhost']
 SECRET_KEY = 'django-insecure-&pre093m2^m119x86%jz4b9b9y6e5(y$xxb*dw-9^)q@1he19v'
 
@@ -178,9 +178,11 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+import dj_database_url
+db_from_env = dj_database_url.config()
 DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': BASE_DIR / 'db.sqlite3',
-  }
+    'default': dj_database_url.config()
 }
+
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
