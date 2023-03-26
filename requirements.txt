@@ -1,3 +1,13 @@
--r requirements-dev.txt
+django
+dj-database-url
+dj-static
+python-decouple
+django-environ
 gunicorn
-psycopg2
+psycopg2-binary
+django-allauth
+django-cors-headers
+python-dotenv
+Pillow
+django-crispy-forms
+django-widget-tweaks
