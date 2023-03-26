@@ -145,7 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/usr/share/nginx/html/static'
+STATIC_ROOT = os.path.join(BASE_DIR / "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -153,7 +153,7 @@ STATICFILES_DIRS = (
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/usr/share/nginx/html/media'
+STATIC_ROOT = os.path.join(BASE_DIR / "media")
 
 
 # Default primary key field type
@@ -182,9 +182,8 @@ ACCOUNT_EMAIL_REQUIRED = True    #メールアドレスを必須項目に指定
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+
 DATABASES = {
- 'default': {
- 'ENGINE': 'django.db.backends.sqlite3',
- 'NAME': BASE_DIR / 'db.sqlite3',
- }
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
