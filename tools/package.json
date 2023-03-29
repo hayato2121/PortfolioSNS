@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tailwind build ../static/css/tailwind.css -o ../static/css/style.css && cleancss -o ../static/css/style.min.css ../static/css/style.css"
+    "tailwind-watch": "tailwindcss -i ../static/css/tailwind.css ../static/css/style.css --watch",
+    "tailwind-build": "tailwindcss -i ../static/css/tailwind.css -o ../static/css/style.css --minify"
   },
   "keywords": [],
   "author": "",
